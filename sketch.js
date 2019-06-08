@@ -47,13 +47,43 @@ var cdt = 1
 let xb = 512/2
 let yb = 80;
 var bv = 390
+var mu3 = true;
+var mu2 = true;
+var mu1 = true;
+var ne = false;
+var nd = false;
+var nn = true;
+var imgfogo = []
+var fogo;
+var conta1 = 0
+var slowa1 = 0
+var a1 = 0
 function setup() {
   createCanvas(512, 512);
     for(i=0;i<qti;i++){
       vxi[i]=random(0,400)
       vyi[i]=-30
-    }  
+    } 
 }
+ function preload() {
+   soundFormats('mp3', 'ogg');
+   mySound = loadSound('songs/weapon-2.mp3');
+   mySound.setVolume(0.8);
+   rocket = loadSound('songs/rocket.mp3');
+    for(a1=0;a1<3;a1++){
+     imgfogo[a1] = loadImage('fogo'+a1+'.png');
+  }
+  naveAn = loadImage('img/naveamarela.png');
+  naveAd = loadImage('img/naveamarelad.png');
+  naveAe = loadImage('img/naveamarelae.png');
+  naveVn = loadImage('img/navevermelha .png');
+  naveVd = loadImage('img/navevermelhad.png');
+  naveVe = loadImage('img/navevermelhae.png');
+  navePn = loadImage('img/naveverde.png');
+  navePd = loadImage('img/naveverded.png');
+  navePe = loadImage('img/naveverdee.png');
+  t1 = loadImage('img/bullet.png');
+ }
 function keyPressed(){
      if (keyIsDown(LEFT_ARROW)) {
      cs = cs -1
@@ -61,10 +91,22 @@ function keyPressed(){
      if (keyIsDown(RIGHT_ARROW)) {
      cs =cs +1
      }
-}
+} 
 function draw() {
+  fogo = imgfogo[conta1]
+  slowa1++
+  if (slowa1==3) {
+    slowa1 = 0;
+    conta1++
+  }
+  if (conta1>=3) {
+    conta1 = 0;
+  }
   confc = cor
    if(fase===0){
+      if(fase===0&&mu1==true){
+       mu1=false
+     }
      background(250)
         fill(0);
        textSize(40)
@@ -89,17 +131,20 @@ function draw() {
      rect(512-150, 190, 140, 140);
        cor = 2;
      }
-     fill('red');
+     fill(250)
      rect(30, 200, 120, 120);
-     fill(255, 255, 0);
+     image(naveVn,30, 200, 120, 120);
+     fill(250)
      rect(512/2-60, 200, 120, 120);
-     fill(64,224,208)
+     image(naveAn,512/2-60, 200, 120, 120);
+     fill(250)
      rect(512-140, 200, 120, 120);
+     image(navePn,512-140, 200, 120, 120);
      
    }
  if(fase==1){
          background(250)
-        fill(0);
+        fill(0)
        textSize(50)
        text("fase tutorial", 110, 120);
        textSize(20)
@@ -107,7 +152,6 @@ function draw() {
        textSize(20)
        text("caso deseje pular o tutorial aperte a tecla 'enter'", 60, 420);
         if (keyIsDown(13)){
-          
             fase=fase+2
          }
         if (keyIsDown(82)){
@@ -115,32 +159,90 @@ function draw() {
          }
  }
   if(fase==2){
-       if (keyIsDown(LEFT_ARROW)) {
-          x -= 5;
-        }
+    nn=true
+     if(fase==2&&mu2==true){
+       mu2=false
+     }
+        if (keyIsDown(LEFT_ARROW)) {
+    ne = true;
+    nn = false;
+    nd = false;
+    x -= 5;
+  }
+  else{
+    ne = false;
+  }
 
-       if (keyIsDown(RIGHT_ARROW)) {
-          x += 5;
-        }
+  if (keyIsDown(RIGHT_ARROW)) {
+    nd = true;
+    nn = false;
+    ne = false;
+    x += 5;
+  }
+    else{
+      nd = false;
+  }
 
-       if (keyIsDown(UP_ARROW)) {
-          y -= 5
-        }
+  if (keyIsDown(UP_ARROW)) {
+    y -= 5
+  }
 
-       if (keyIsDown(DOWN_ARROW)) {
-          y += 5;
-        }
-       clear();
-       if(confc===0){
-         fill('red')
-       }
-       if(confc==1){
-         fill('rgb(255, 255, 0)');
-       } 
-       if(confc==2){
-         fill('rgb(64,224,208)');
-       }
-        ellipse(x, y, 20, 50);
+  if (keyIsDown(DOWN_ARROW)) {
+    y += 5;
+  }
+
+  clear();
+  if (disparo) {
+   // ellipse(xd,yd,8,8) 
+          imageMode(CENTER);
+            image(t1, xd, yd);
+            }
+ // ellipse(x, y, 20, 50);
+image(fogo, x, y+25,15,15);
+   if(nn==true){
+               if(cor==0){
+                 imageMode(CENTER);
+              image(naveVn, x, y);
+               }
+                if(cor==1){
+                 imageMode(CENTER);
+              image(naveAn, x+1, y);
+               }
+                  if(cor==2){
+                 imageMode(CENTER);
+              image(navePn, x-1, y);
+               }
+     }
+   if(nd==true){
+                if(cor==0){
+                  imageMode(CENTER);
+              image(naveVd, x, y);
+               }
+                 if(cor==1){
+                  imageMode(CENTER);
+              image(naveAd, x, y);
+               }
+                   if(cor==2){
+                  imageMode(CENTER);
+              image(navePd, x, y);
+               }
+     }
+   if(ne==true){
+                  if(cor==0){
+                  imageMode(CENTER);
+              image(naveVe, x, y);
+               }
+                 if(cor==1){
+                  imageMode(CENTER);
+              image(naveAe, x, y);
+               }
+                   if(cor==2){
+                  imageMode(CENTER);
+              image(navePe, x, y);
+               }
+     }
+     cargas = 99999999999999999999
+   //ellipse(x, y, 20, 50);
               if(x<12){
                 x = 12
                }
@@ -172,7 +274,8 @@ function draw() {
           yp = 600
           disparo2 = true;
         }
-       if (keyIsDown(77) && (! disparo2) ){ 
+       if (keyIsDown(77) && (! disparo2) ){
+          rocket.play();
           disparo2 = true; 
           yp = y;
           xp = x;
@@ -211,6 +314,7 @@ function draw() {
                          }
                      fill(250, 0 , 0);
                    if(keyIsDown(32) && (! disparo) ){ 
+                       mySound.play();
                        disparo = true; 
                        xd = x;
                        yd = y;     
@@ -221,9 +325,6 @@ function draw() {
                            disparo = false; 
                                       }
                         }
-                     if (disparo) {
-                      ellipse(xd,yd,8,8)   
-                      }
                     if(dist(x,y,vxi[i],vyi[i])<50){
                        x = 512/2;
                        y = 480;
@@ -266,12 +367,14 @@ function draw() {
                              xp = xp - 4
                            }
                          if (yp < 0) {
+                             rocket.stop()
                              disparo2 = false; 
                            }
                       }
                     if(dist(xp,yp,vxi[i],vyi[i])<(55/2)+4){
+                            rocket.stop()
                             vxi[i] =Math.random() * (width - 50)
-                                     vyi[i] =  555
+                            vyi[i] =  555
                             disparo2 = false;  
                             pontos = pontos + 1
                     }
@@ -388,6 +491,9 @@ function draw() {
      }
     }
  if(fase==3){
+    if(fase==3&&mu3==true){
+       mu3=false
+     }
                       fill(cor)
                 if (keyIsDown(LEFT_ARROW)) {
                   x -= 5;
@@ -473,6 +579,7 @@ function draw() {
                              }
                          fill(250, 0 , 0);
                        if (keyIsDown(32) && (! disparo) ){ 
+                           mySound.play();
                            disparo = true; 
                            xd = x;
                            yd = y;     
@@ -492,8 +599,8 @@ function draw() {
                             vidas = vidas - 1
                             vxi[i] = Math.random() * (width - 50)
                             vyi[i] = - 50
-                            pontos = pontos -10
-                              cont = cont -10
+                            pontos = pontos -1
+                              cont = cont -1
                             }
                          if(dist(xd,yd,vxi[i],vyi[i])<(55/2)+4){
                            pontos = pontos + 1
@@ -814,6 +921,7 @@ if(fase==4){
                          }
                      fill(250, 0 , 0);
                    if(keyIsDown(32) && (! disparo) ){ 
+                      mySound.play();
                        disparo = true; 
                        xd = x;
                        yd = y;     
@@ -966,7 +1074,7 @@ if(fase==4){
                       rect(35, 512-28, bv, 15, 20);
                     if(vidas <= 0){
                         x = 512/2-10
-                        y = 480
+                        y = 400
                         qti = 0;
                         fill(250, 0, 0); 
                         textSize(60);
