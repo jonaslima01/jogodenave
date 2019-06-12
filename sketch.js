@@ -13,12 +13,15 @@ var cor = 0;
 var confc = 0;
 var slow = 0;
 var cont = 5;
+var contpontos = 5;
 var contm1 = false;
 var m2 = false;
 var xo=Math.random() * 400;
 var yo = 522;
 var xo2 = Math.random() * 400;
 var yo2 = -20;
+var xo3 = Math.random() * 400;
+var yo3 = -20;
 let x = 512/2-10;
 let y = 480;
 var vxi = [];
@@ -41,23 +44,69 @@ let xdi = -50
 let ydi = -50
 var ydi2 = 80;
 var xdi2 = 512/2;
-var yi = 512
+var yi = 612
 let contdi = 0
 var cdt = 1
 let xb = 512/2
 let yb = 80;
 var bv = 390
-var mu3 = true;
+var music7 = true;
+var music6 = true;
+var music5 = true;
+var music4 = true;
+var music3 = true;
+var music2 = true;
+var music1 = true;
 var mu2 = true;
 var mu1 = true;
 var ne = false;
 var nd = false;
 var nn = true;
+var impact = false;
+var impact2 = false;
 var imgfogo = []
 var fogo;
-var conta1 = 0
-var slowa1 = 0
-var a1 = 0
+var imgtb = []
+var tb;
+var imgvida = []
+var vida;
+var imge1 = []
+var e1;
+var imge2 = []
+var e2;
+var conta5 = 0;
+var slowa5 = 0;
+var conta1 = 0;
+var slowa1 = 0;
+var conta2 = 0;
+var slowa2 = 0;
+var conta3 = 0;
+var slowa3 = 0;
+var conta4 = 0;
+var slowa4 = 0;
+var a1 = 0;
+var a2 = 0;
+var a3 = 0;
+var a4 = 0;
+var imgdb = []
+var db;
+var conta6 = 0;
+var slowa6 = 0;
+var a6 = 0;
+var imgsi = []
+var si;
+var conta7 = 0;
+var slowa7 = 0;
+var a7 = 0;
+var imgco = []
+var coin;
+var conta8 = 0;
+var slowa8 = 0;
+var a8 = 0;
+var ycena1 = -398;
+var ycena2 = -1308;
+var ex = 0;
+var ey = 0;
 function setup() {
   createCanvas(512, 512);
     for(i=0;i<qti;i++){
@@ -67,22 +116,65 @@ function setup() {
 }
  function preload() {
    soundFormats('mp3', 'ogg');
-   mySound = loadSound('songs/weapon-2.mp3');
+   mysond2 = loadSound('songs/stomp.wav');
+   mySound = loadSound('songs/Laser_Shoot7.wav');
    mySound.setVolume(0.8);
    rocket = loadSound('songs/rocket.mp3');
+   bossbattle = loadSound('music/bossbattle.ogg'); 
+   musicfase1 = loadSound('music/song_monster.ogg'); 
+   musicselect = loadSound('music/song_katanazero.ogg'); 
+   musicselect.setVolume(0.5);
+   musicgame = loadSound('music/game.ogg'); 
+    musicgame.setVolume(0.5);
+   musictuto = loadSound('music/tutorial.mp3'); 
+   musictuto.setVolume(0.5);
     for(a1=0;a1<3;a1++){
      imgfogo[a1] = loadImage('fogo'+a1+'.png');
   }
+    for(a2=0;a2<7;a2++){
+    imgtb[a2] = loadImage('img/tb'+a2+'.png');
+  }
+   for(a3=0;a3<3;a3++){
+    imgvida[a3] = loadImage('img/frame-'+a3+'.png');
+  }
+  for(a4=0;a4<9;a4++){
+    imge1[a4] = loadImage('img/explosion-animation'+(a4+1)+'.png');
+  }
+      for(a5=0;a5<6;a5++){
+    imge2[a5] = loadImage('img/exp'+a5+'.png');
+  }
+    for(a6=0;a6<8;a6++){
+    imgdb[a6] = loadImage('anima/tiroboss'+a6+'.png');
+  }
+    for(a7=0;a7<8;a7++){
+    imgsi[a7] = loadImage('anima/slow'+a7+'.png');
+  }
+       for(a8=0;a8<8;a8++){
+    imgco[a8] = loadImage('anima/coin'+a8+'.png');
+  }
+  Me = loadImage('img/Missileladoe.png');
+  Md = loadImage('img/Missileladod.png');
+  Mn = loadImage('img/Missile.png');
+  naveBe = loadImage('img/caveira0.png');
+  naveBn = loadImage('img/caveira1.png');
+  naveBd = loadImage('img/caveira2.png');
+  naveB  = loadImage('img/boss.png');
   naveAn = loadImage('img/naveamarela.png');
   naveAd = loadImage('img/naveamarelad.png');
   naveAe = loadImage('img/naveamarelae.png');
+  naveIn = loadImage('img/naveinimigo.png');
+  naveId = loadImage('img/naveinimigod.png');
+  naveIe = loadImage('img/naveinimigoe.png');
   naveVn = loadImage('img/navevermelha .png');
   naveVd = loadImage('img/navevermelhad.png');
   naveVe = loadImage('img/navevermelhae.png');
   navePn = loadImage('img/naveverde.png');
   navePd = loadImage('img/naveverded.png');
   navePe = loadImage('img/naveverdee.png');
+  meteoro = loadImage('img/meteoro.png');
   t1 = loadImage('img/bullet.png');
+  cena = loadImage('img/ideia1.png');
+  moldura = loadImage('img/moldura.png');
  }
 function keyPressed(){
      if (keyIsDown(LEFT_ARROW)) {
@@ -102,13 +194,77 @@ function draw() {
   if (conta1>=3) {
     conta1 = 0;
   }
+     tb = imgtb[conta2]
+  slowa2++
+  if (slowa2==10) {
+    slowa2 = 0;
+    conta2++
+  }
+  if (conta2>=3) {
+    conta2 = 0;
+  }
+  vida = imgvida[conta3]
+  slowa3++
+  if (slowa3==10) {
+    slowa3 = 0;
+    conta3++
+  }
+  if (conta3==3) {
+    conta3 = 0;
+  }
+  
+   db = imgdb[conta6]
+  slowa6++
+  if (slowa6==10) {
+    slowa6 = 0;
+    conta6++
+  }
+  if (conta6>=8) {
+    conta6 = 0;
+  }
+  
+     si = imgsi[conta7]
+  slowa7++
+  if (slowa7==5) {
+    slowa7 = 0;
+    conta7++
+  }
+  if (conta7>=8) {
+    conta7 = 0;
+  }
+  
+       coin = imgco[conta8]
+  slowa8++
+  if (slowa8==5) {
+    slowa8 = 0;
+    conta8++
+  }
+  if (conta8>=8) {
+    conta8 = 0;
+  }
+  
+  e1 = imge1[conta4]
+ e2 = imge2[conta5]
   confc = cor
+  
    if(fase===0){
-      if(fase===0&&mu1==true){
-       mu1=false
+      if(fase===0&&music1==true){
+        musicselect.loop()
+       music1=false
      }
-     background(250)
-        fill(0);
+  background(0);
+    ycena1 = ycena1 +5
+    ycena2 = ycena2 +5
+    imageMode(CORNER);
+    image(cena,0,ycena1,512, 910);
+    image(cena,0,ycena2,512, 910);
+    if(ycena1>=512){
+    ycena1 = -1308
+    }
+  if(ycena2>=512){
+    ycena2 = -1308
+    }
+        fill(250);
        textSize(40)
      text("  escolha seu personagem:", 10, 150);
      textSize(30)
@@ -120,29 +276,38 @@ function draw() {
     cs = 0
   }
      if(cs===0){
-     rect(20, 190, 140, 140);
+     //rect(20, 190, 140, 140);
+       imageMode(CORNER);
+       image(moldura,20, 190, 140, 140);
        cor = 0;
      }
      if(cs==1||cs==-2){
-     rect(512/2-70, 190, 140, 140);
+    // rect(512/2-70, 190, 140, 140);
+       imageMode(CORNER);
+     image(moldura,512/2-70, 190, 140, 140);
        cor = 1;
      }
      if(cs==2||cs==-1){
-     rect(512-150, 190, 140, 140);
+    // rect(512-150, 190, 140, 140);
+       imageMode(CORNER);
+     image(moldura,512-150, 190, 140, 140);
        cor = 2;
      }
      fill(250)
-     rect(30, 200, 120, 120);
+     //rect(30, 200, 120, 120);
+     imageMode(CORNER);
      image(naveVn,30, 200, 120, 120);
      fill(250)
-     rect(512/2-60, 200, 120, 120);
+     //rect(512/2-60, 200, 120, 120);
+     imageMode(CORNER);
      image(naveAn,512/2-60, 200, 120, 120);
      fill(250)
-     rect(512-140, 200, 120, 120);
+     //rect(512-140, 200, 120, 120);
+     imageMode(CORNER);
      image(navePn,512-140, 200, 120, 120);
      
    }
- if(fase==1){
+ if(fase==1){                    //pre-tutorial
          background(250)
         fill(0)
        textSize(50)
@@ -153,16 +318,19 @@ function draw() {
        text("caso deseje pular o tutorial aperte a tecla 'enter'", 60, 420);
         if (keyIsDown(13)){
             fase=fase+2
+         musicselect.stop()
          }
         if (keyIsDown(82)){
            fase=fase+1
+        musicselect.stop()
          }
  }
-  if(fase==2){
+  if(fase==2){                        //tutorial
+        if(fase==2&&music6==true){
+   musictuto.loop()
+       music6=false
+        }
     nn=true
-     if(fase==2&&mu2==true){
-       mu2=false
-     }
         if (keyIsDown(LEFT_ARROW)) {
     ne = true;
     nn = false;
@@ -192,53 +360,98 @@ function draw() {
   }
 
   clear();
+      background(0);
+    ycena1 = ycena1 +5
+    ycena2 = ycena2 +5
+    imageMode(CORNER);
+    image(cena,0,ycena1,512, 910);
+    image(cena,0,ycena2,512, 910);
+    if(ycena1>=512){
+    ycena1 = -1308
+    }
+  if(ycena2>=512){
+    ycena2 = -1308
+    }
   if (disparo) {
    // ellipse(xd,yd,8,8) 
           imageMode(CENTER);
-            image(t1, xd, yd);
+            image(t1, xd, yd,4,15);
             }
  // ellipse(x, y, 20, 50);
+imageMode(CENTER);
 image(fogo, x, y+25,15,15);
+               if(impact==true){
+                    imageMode(CENTER);
+                    image(e1,ex,ey);
+                           slowa4=slowa4 + 1
+                             if (slowa4>=2) {
+                                slowa4 = 0;
+                                conta4=conta4 + 1
+                              }
+                              if (conta4>=9) {
+                                 conta4 = 0;
+                              impact=false
+                              }
+                 }
+    if(impact2==true){
+                    imageMode(CENTER);
+                    image(e2,ex,ey,50,50);
+                           slowa5=slowa5 + 1
+                             if (slowa5>=3) {
+                                slowa5 = 0;
+                                conta5=conta5 + 1
+                              }
+                              if (conta5>=5) {
+                                      mysond2.play()
+                                 conta5 = 0;
+                              impact2=false
+                              }
+                 }
+    
    if(nn==true){
                if(cor==0){
                  imageMode(CENTER);
-              image(naveVn, x, y);
+              image(naveVn, x-1, y,50,50);
                }
                 if(cor==1){
                  imageMode(CENTER);
-              image(naveAn, x+1, y);
+              image(naveAn, x-1, y,50,50);
                }
                   if(cor==2){
                  imageMode(CENTER);
-              image(navePn, x-1, y);
+              image(navePn, x, y,50,50);
+               }
+      if(cor==2){
+                 imageMode(CENTER);
+              image(Mn, xp, yp,50,50);
                }
      }
    if(nd==true){
                 if(cor==0){
                   imageMode(CENTER);
-              image(naveVd, x, y);
+              image(naveVd, x, y,50,50);
                }
                  if(cor==1){
                   imageMode(CENTER);
-              image(naveAd, x, y);
+              image(naveAd, x, y,50,50);
                }
                    if(cor==2){
                   imageMode(CENTER);
-              image(navePd, x, y);
+              image(navePd, x, y,50,50);
                }
      }
    if(ne==true){
                   if(cor==0){
                   imageMode(CENTER);
-              image(naveVe, x, y);
+              image(naveVe, x, y,50,50);
                }
                  if(cor==1){
                   imageMode(CENTER);
-              image(naveAe, x, y);
+              image(naveAe, x, y,50,50);
                }
                    if(cor==2){
                   imageMode(CENTER);
-              image(navePe, x, y);
+              image(navePe, x, y,50,50);
                }
      }
      cargas = 99999999999999999999
@@ -252,15 +465,18 @@ image(fogo, x, y+25,15,15);
                if(x>500){
                  x = 500
                 }
-               if(y>480){
-                 y = 480
+               if(y>400){
+                 y = 400
                 } 
                 if(tempo>= 880){
-                     fill('rgb(0,255,0)');         
-                       ellipse(xo2,yo2,20,20) 
+                       //ellipse(xo2,yo2,20,20) 
+                     imageMode(CENTER);
+                     image(vida, xo2, yo2,60,40);
                        yo2= yo2 + 3
                      fill(200, 102, 153);
-                       ellipse(xo,yo,20,20) 
+                       //ellipse(xo,yo,20,20) 
+                   imageMode(CENTER);
+                     image(si, xo, yo,30,30);
                        yo= yo + 6
                           if ( yo >= 2000){
                              yo  = 0
@@ -284,11 +500,16 @@ image(fogo, x, y+25,15,15);
    
          fill(250, 220, 0);
        if (disparo2) {
-          ellipse(xp,yp,8,8)   
+             imageMode(CENTER);
+                image(Mn, xp, yp,10,20);
+                imageMode(CENTER);
+                image(fogo, xp, yp+25,8,10); 
         }
              for(i=0;i<qti;i++){
                  fill('rgb(0,255,160)');
-                 ellipse(vxi[i], vyi[i], 50, 50);
+                 //ellipse(vxi[i], vyi[i], 50, 50);
+                  imageMode(CENTER);
+               image(meteoro, vxi[i], vyi[i],50,50);
                 if(tempo>1920&&pontos<15){
                  vyi[i] = vyi[i] + 1
                 }
@@ -330,12 +551,18 @@ image(fogo, x, y+25,15,15);
                        y = 480;
                        vxi[i] = Math.random() * (width - 50)
                        vyi[i] = - 50
-                       }
+                  }
+                       
                      if(dist(xd,yd,vxi[i],vyi[i])<29){
+                      if(vyi[i]>0){
                        pontos = pontos + 1
+                       impact2 = true;
+                       ex = vxi[i]
+                       ey = vyi[i]
                       vxi[i] = Math.random() * (width - 50)
-                      vyi[i] = - 50
-                      disparo = false;
+                       vyi[i] = - 50
+                      }
+                       disparo = false; 
                      }
                      if(dist(xd,yd,xo,yo)<14){
                        contm1=true
@@ -373,31 +600,44 @@ image(fogo, x, y+25,15,15);
                       }
                     if(dist(xp,yp,vxi[i],vyi[i])<(55/2)+4){
                             rocket.stop()
-                            vxi[i] =Math.random() * (width - 50)
-                            vyi[i] =  555
+                       if(vyi[i]>0){
+                       pontos = pontos + 1
+                       impact2 = true;
+                       ex = vxi[i]
+                       ey = vyi[i]
+                      vxi[i] = Math.random() * (width - 50)
+                       vyi[i] = - 50
+                      }
                             disparo2 = false;  
-                            pontos = pontos + 1
                     }
              }
          if(tempo<200){
-            fill(0);
+    fill(250);    
+    rect(0,430,512,112) 
+           fill(0);
             textSize(25)
-            text("use as teclas ←,↑,→ ou ↓ \npara mover o personagem.", 100, 350);
+            text("use as teclas ←,↑,→ ou ↓ \npara mover o personagem.", 100, 470);
            }     
          if(tempo>220&&tempo<420){
+           fill(250);    
+           rect(0,430,512,112) 
            fill(0);
            textSize(25)
-           text("use a tecla espaço para \natirar um projétil em linha reta.", 100, 350);
+           text("  use a tecla espaço para \natirar um projétil em linha reta.", 100, 470);
            }
          if(tempo>440&&tempo<640){
+         fill(250);    
+         rect(0,430,512,112) 
          fill(0);
            textSize(25)
-           text("caso tenha cargas use a tecla 'm' \npara atirar um projétil perseguidor.", 80, 350);
+           text("caso tenha cargas use a tecla 'm' \npara atirar um projétil perseguidor.", 80, 470);
            }
         if(tempo>660&&tempo<860){
+           fill(250);    
+           rect(0,430,512,112) 
            fill(0);
            textSize(25)
-           text("   vidas e cargas são mostrados em \ncontadores no canto superior esquerdo. ", 50, 350);
+           text("   vidas e cargas são mostrados em \ncontadores no canto superior esquerdo. ", 50, 470);
            }
            if(tempo>660){
               if(tempo<860&&tempo%50!==0||tempo<1160&&tempo%50!=1){
@@ -414,21 +654,27 @@ image(fogo, x, y+25,15,15);
                 text("cargas:∞", 10, 60);
             }
          if(tempo>880&&tempo<1280){
+           fill(250);    
+           rect(0,430,512,112) 
            fill(0);
            textSize(25)
-           text("       colodir com objetos ou \n  acertar objetos com disparos \nte garante algum tipo de bônus ", 60,350);
+           text("  colodir com objetos ou acertar-los com\ndisparos te garante algum tipo de bônus ", 40,470);
          
            }
          if(tempo>1300&&tempo<1700){
+           fill(250);    
+           rect(0,430,512,112) 
            fill(0);
            textSize(25)
-           text("naves verdes são consideradas inimigas\ne você deve acertalas com disparos.", 40,350);
+           text("você passará por uma chuva de meteoros \n   acertalos com disparos os destruirão.", 40,470);
            
            }
          if(tempo>1720&&tempo<1920){
+           fill(250);    
+           rect(0,430,512,112) 
            fill(0);
            textSize(25)
-           text("acertar inimigos com disparos te dão \npontos que são importantes para \nprogredir no jogo.", 40,350);
+           text("acertar meteoros com disparos te da \n    pontos  para progredir no jogo.", 40,470);
            }
         if(tempo>1700){
             if(tempo<1700&&tempo%50!==0||tempo<1700&&tempo%50!=1){
@@ -480,8 +726,10 @@ image(fogo, x, y+25,15,15);
        textSize(20)
        text("caso deseje iniciar o jogo aperte a tecla 'enter'", 70, 420);
         if (keyIsDown(13)){
+           musictuto.stop()
           pontos = 0
             fase=fase+1
+             cargas = 6
          }
         if (keyIsDown(82)){
             pontos = 0
@@ -490,38 +738,118 @@ image(fogo, x, y+25,15,15);
        
      }
     }
- if(fase==3){
-    if(fase==3&&mu3==true){
-       mu3=false
+ if(fase==3){             //FASE 1
+    if(fase==3&&music3==true){
+      musicfase1.loop()
+      nivel=1
+       music3=false
      }
-                      fill(cor)
-                if (keyIsDown(LEFT_ARROW)) {
-                  x -= 5;
-                }
-              
-                if (keyIsDown(RIGHT_ARROW)) {
-                  x += 5;
-                }
-              
-                if (keyIsDown(UP_ARROW)) {
-                  y -= 5
-                }
-              
-                if (keyIsDown(DOWN_ARROW)) {
-                  y += 5;
-                }
-              
-                clear();
-    if(confc===0){
-         fill('red')
-       }
-       if(confc==1){
-         fill('rgb(255, 255, 0)');
-       } 
-       if(confc==2){
-         fill('rgb(64,224,208)');
-       }
-                ellipse(x, y, 20, 50);
+       nn=true
+        if (keyIsDown(LEFT_ARROW)) {
+    ne = true;
+    nn = false;
+    nd = false;
+    x -= 5;
+  }
+  else{
+    ne = false;
+  }
+
+  if (keyIsDown(RIGHT_ARROW)) {
+    nd = true;
+    nn = false;
+    ne = false;
+    x += 5;
+  }
+    else{
+      nd = false;
+  }
+
+  if (keyIsDown(UP_ARROW)) {
+    y -= 5
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    y += 5;
+  }
+
+  clear();
+     background(0);
+    ycena1 = ycena1 +5
+    ycena2 = ycena2 +5
+    imageMode(CORNER);
+    image(cena,0,ycena1,512, 910);
+    image(cena,0,ycena2,512, 910);
+    if(ycena1>=512){
+    ycena1 = -1308
+    }
+  if(ycena2>=512){
+    ycena2 = -1308
+    }
+  if (disparo) {
+   // ellipse(xd,yd,8,8) 
+          imageMode(CENTER);
+            image(t1, xd, yd,4,15);
+            }
+       if(impact2==true){
+                    imageMode(CENTER);
+                    image(e2,ex,ey,50,50);
+                           slowa5=slowa5 + 1
+                             if (slowa5>=3) {
+                                slowa5 = 0;
+                                conta5=conta5 + 1
+                              }
+                              if (conta5>=5) {
+                                 conta5 = 0;
+                                mysond2.play()
+                              impact2=false
+                              }
+                 }
+imageMode(CENTER);
+image(fogo, x, y+25,15,15);
+   if(nn==true){
+               if(cor==0){
+                 imageMode(CENTER);
+              image(naveVn, x, y,50,50);
+               }
+                if(cor==1){
+                 imageMode(CENTER);
+              image(naveAn, x-1, y,50,50);
+               }
+                  if(cor==2){
+                 imageMode(CENTER);
+              image(navePn, x-1, y,50,50);
+               }
+     }
+   if(nd==true){
+                if(cor==0){
+                  imageMode(CENTER);
+              image(naveVd, x, y,50,50);
+               }
+                 if(cor==1){
+                  imageMode(CENTER);
+              image(naveAd, x, y,50,50);
+               }
+                   if(cor==2){
+                  imageMode(CENTER);
+              image(navePd, x, y,50,50);
+               }
+     }
+   if(ne==true){
+                  if(cor==0){
+                  imageMode(CENTER);
+              image(naveVe, x, y,50,50);
+               }
+                 if(cor==1){
+                  imageMode(CENTER);
+              image(naveAe, x, y,50,50);
+               }
+                   if(cor==2){
+                  imageMode(CENTER);
+              image(navePe, x, y,50,50);
+               }
+     }
+               // ellipse(x, y, 20, 50);
                      if(x<12){
                         x = 12
                        }
@@ -550,12 +878,18 @@ image(fogo, x, y+25,15,15);
                  
                     fill(250, 220, 0);
                     if (disparo2) {
-                       ellipse(xp,yp,8,8)   
+                imageMode(CENTER);
+                image(Mn, xp, yp,10,20);
+                imageMode(CENTER);
+                image(fogo, xp, yp+25,8,10);
                     }
               
                 for(i=0;i<qti;i++){
                       fill('rgb(0,255,160)');
-                      ellipse(vxi[i], vyi[i], 50, 50);
+                      //ellipse(vxi[i], vyi[i], 50, 50); 
+                      imageMode(CENTER);
+                      image(meteoro, vxi[i], vyi[i],50,50);
+                     
                       vyi[i] = vyi[i] + nivel - slow 
                      if(vyi[i]>height){
                        vyi[i]=55/2-a
@@ -591,7 +925,9 @@ image(fogo, x, y+25,15,15);
                                 }
                             }
                          if (disparo) {
-                           ellipse(xd,yd,8,8)   
+                           //ellipse(xd,yd,8,8)
+                           imageMode(CENTER);
+                           image(t1, xd, yd,4,15);
                            }
                          if(dist(x,y,vxi[i],vyi[i])<50){
                             x = 512/2;
@@ -603,11 +939,16 @@ image(fogo, x, y+25,15,15);
                               cont = cont -1
                             }
                          if(dist(xd,yd,vxi[i],vyi[i])<(55/2)+4){
-                           pontos = pontos + 1
-                           vxi[i] = Math.random() * (width - 50)
-                           vyi[i] = - 50
-                           disparo = false;
-                          }
+                                               if(vyi[i]>0){
+                       pontos = pontos + 1
+                       impact2 = true;
+                       ex = vxi[i]
+                       ey = vyi[i]
+                      vxi[i] = Math.random() * (width - 50)
+                       vyi[i] = - 50
+                      }
+                                 disparo = false; 
+                               }
                          if(dist(xd,yd,xo,yo)<14){
                        contm1=true
                        slow = slow + 3
@@ -626,28 +967,46 @@ image(fogo, x, y+25,15,15);
                        vidas = vidas + 2
                        yo2 =  525
                      }
+                    if(dist(x,y,xo3,yo3)<24){
+                      
+                      yo3 =  525
+                       pontos = pontos + 2
+                     }
+                    if(dist(xd,yd,xo3,yo3)<14){
+                      yo3 =  525
+                       pontos = pontos + 2
+                       
+                     }
                     if(dist(x,y,xo2,yo2)<24){
                       m2=true
                       vidas = vidas + 2
                       yo2 =  525
                      }
                          if (disparo2) {
-                            yp = yp -4; 
-                               if (xp < vxi[imp]) {
+                            yp = yp -5;   
+                                       
+                        if (xp < vxi[imp]) {
                                   xp = xp + 4
                                 }
-                               if (xp > vxi[imp]) {
-                                  xp = xp - 4
+                        if (xp > vxi[imp]) {
+                              xp = xp - 4
+                                }
+                        if(xp == vxi[imp]) {
                                 }
                                if (yp < 0) {
                                   disparo2 = false; 
                                 }
                            }
                           if(dist(xp,yp,vxi[i],vyi[i])<(55/2)+4){
-                                 vxi[i] =Math.random() * (width - 50)
-                                 vyi[i] =  555                   
-                                 disparo2 = false;                  
-                                 pontos = pontos + 1 
+                                  if(vyi[i]>0){
+                                   pontos = pontos + 1
+                                   impact2 = true;
+                                   ex = vxi[i]
+                                   ey = vyi[i]
+                                  vxi[i] = Math.random() * (width - 50)
+                                   vyi[i] = - 50
+                                  }                  
+                                 disparo2 = false;               
                           }
                       }
              
@@ -684,38 +1043,59 @@ image(fogo, x, y+25,15,15);
                     if(pontos <= 0){
                pontos = 0            
               }
-              if(pontos >= cont){
+              if(pontos >= contpontos){
                nivel = nivel +1
-                cont = cont+5
+                contpontos = contpontos+5
               }
                    if( nivel <= 10){
                      fill('rgb(0,255,0)');
                      if( nivel >= 6){              
-                       ellipse(xo2,yo2,20,20) 
+                      // ellipse(xo2,yo2,20,20) 
+                       imageMode(CENTER);
+                       image(vida, xo2, yo2,60,40);
                        yo2= yo2 + 3
                       }
                      fill(200, 102, 153);
                      if( nivel >= 5){
-                       ellipse(xo,yo,20,20) 
+                       //ellipse(xo,yo,20,20) 
+                       imageMode(CENTER);
+                     image(si, xo, yo,30,30);
                        yo= yo + 6
                           if ( yo >= 2000){
                              yo  = 0
                              slow = 0
                            }
                       } 
+                       if( nivel >= 3){
+                       //ellipse(xo,yo,20,20) 
+                     imageMode(CENTER);
+                     image(coin, xo3, yo3,30,30);
+                       yo3= yo3 + 6
+                          if ( yo3 >= 2000){
+                             xo3 = Math.random() * (width - 50)
+                             yo3  = 0
+                           }
+                      } 
                    }
-                     if(nivel > 10){
+                     if(nivel == 10){
                         fase=fase+1
                        tempo =0
                        }
                      
                       if(vidas <= 0){
+                        if(vidas <= 0 &&music6==true){
+                          musicgame.loop()
+                          music6=false
+                         }
+                        musicfase1.stop()
                         x = 512/2-10
                         y = 480
                         qti = 0;
                         fill(250, 0, 0); 
                         textSize(60);
                         text("GAME OVER",80,512/2);
+                        textSize(20)
+       text("caso deseje jogar novamente aperte a tecla 'f5'", 60, 420);
                         vidas = 0;
                         yo  = -12
                         yo2  = -12
@@ -723,25 +1103,105 @@ image(fogo, x, y+25,15,15);
                         disparo2 = true; 
                       }
             }   
-if(fase==4){
-                        if (keyIsDown(LEFT_ARROW)) {
-                           x -= 5;
-                         }
-              
-                        if (keyIsDown(RIGHT_ARROW)) {
-                           x += 5;
-                         }
-                        clear();                                
-       if(confc===0){
-         fill('red')
-       }
-       if(confc==1){
-         fill('rgb(255, 255, 0)');
-       } 
-       if(confc==2){
-         fill('rgb(64,224,208)');
-       }
-                         ellipse(x, y, 20, 50);
+if(fase==4){                        //fase 2
+ nn = true;                       
+        if (keyIsDown(LEFT_ARROW)) {
+             ne = true;
+             nn = false;
+             nd = false;
+             x -= 5;
+           }
+           else{
+             ne = false;
+           }
+         
+           if (keyIsDown(RIGHT_ARROW)) {
+             nd = true;
+             nn = false;
+             ne = false;
+             x += 5;
+           }
+             else{
+               nd = false;
+           } 
+  clear(); 
+       background(0);
+    ycena1 = ycena1 +5
+    ycena2 = ycena2 +5
+    imageMode(CORNER);
+    image(cena,0,ycena1,512, 910);
+    image(cena,0,ycena2,512, 910);
+    if(ycena1>=512){
+    ycena1 = -1308
+    }
+  if(ycena2>=512){
+    ycena2 = -1308
+    }
+imageMode(CENTER);
+image(fogo, x, y+25,15,15);
+   if(impact2==true){
+                    imageMode(CENTER);
+                    image(e2,ex,ey,50,50);
+                           slowa5=slowa5 + 1
+                             if (slowa5>=3) {
+                                slowa5 = 0;
+                                conta5=conta5 + 1
+                              }
+                              if (conta5>=5) {
+                                 conta5 = 0;
+                                mysond2.play()
+                              impact2=false
+                              }
+                 }
+ if(nn==true){
+       imageMode(CENTER);
+       image(naveIn, x, yi,50,50);
+               if(cor==0){
+                 imageMode(CENTER);
+              image(naveVn, x, y,50,50);
+               }
+                if(cor==1){
+                 imageMode(CENTER);
+              image(naveAn, x-1, y,50,50);
+               }
+                  if(cor==2){
+                 imageMode(CENTER);
+              image(navePn, x-1, y,50,50);
+               }
+     }
+   if(nd==true){
+       imageMode(CENTER);
+       image(naveId, x, yi,50,50);
+                if(cor==0){
+                  imageMode(CENTER);
+              image(naveVd, x, y,50,50);
+               }
+                 if(cor==1){
+                  imageMode(CENTER);
+              image(naveAd, x, y,50,50);
+               }
+                   if(cor==2){
+                  imageMode(CENTER);
+              image(navePd, x, y,50,50);
+               }
+     }
+   if(ne==true){
+       imageMode(CENTER);
+       image(naveIe, x, yi,50,50);
+                  if(cor==0){
+                  imageMode(CENTER);
+              image(naveVe, x, y,50,50);
+               }
+                 if(cor==1){
+                  imageMode(CENTER);
+              image(naveAe, x, y,50,50);
+               }
+                   if(cor==2){
+                  imageMode(CENTER);
+              image(navePe, x, y,50,50);
+               }
+     }
+                         //ellipse(x, y, 20, 50);
                                  if(x<12){
                                    x = 12
                                   }
@@ -759,11 +1219,12 @@ if(fase==4){
                                   if (y>150){
                                     y = y - tempo
                                   }
-                                  if (yi>480){
-                                    yi = yi - tempo
+                           if (yi>450){
+                                    yi = yi - 4
                                   }
                         fill(0, 102, 153);
-                         ellipse(x,yi,20,50);
+                         //ellipse(x,yi,20,50);
+                         
                        }
                                   
                        fill(0, 102, 153);
@@ -778,7 +1239,9 @@ if(fase==4){
                                 } 
                           if (disparo3) {
                              fill(0, 102, 153);
-                             ellipse(xdi,ydi,8,8)   
+                             //ellipse(xdi,ydi,8,8) 
+                             imageMode(CENTER);
+                             image(t1, xdi, ydi,4,15);
                            }
                          if(dist(xdi,ydi,x,y)<(55/2)+4){
                            vidas = vidas - 1
@@ -787,14 +1250,16 @@ if(fase==4){
                            disparo3 = false;  
                             pontos = pontos -10 
                            }
-                         if(tempo>=100-nivel2&& !disparo3 && vidas>0) { 
+                      if(tempo>=100-nivel2&& !disparo3 && vidas>0){ 
+                           mySound.play();
                            disparo3 = true; 
                             xdi = x;
                            ydi = yi
                            nivel2 =nivel2 +1
                            contdi++
                           }
-                        if(contdi>=11){
+                        if(contdi>=11){ 
+                          mySound.stop();
                           disparo3 = false;
                           }
                          
@@ -806,6 +1271,13 @@ if(fase==4){
                  text("pontos: "+pontos, 200, 30);
                 text("cargas: "+cargas, 10, 60);
                       if(vidas <= 0){
+                        musicfase1.stop()
+                        if(vidas <= 0 &&music6==true){
+                          musicgame.loop()
+                          music6=false
+                         }
+                         textSize(20)
+ text("caso deseje jogar novamente aperte a tecla 'f5'", 60, 420);
                         fill(250, 0, 0); 
                         textSize(60);
                         text("GAME OVER",80,512/2);
@@ -826,39 +1298,127 @@ if(fase==4){
      ydi = -50
                if (y<400){
                   y = y + 1 
+                 yi = yi + 1 
                 }
                        
                  else{ 
                  fase=fase+1
+                   musicfase1.stop()
                    }
       }
-  if(fase==5){
-                        fill(250);
-                        if (keyIsDown(LEFT_ARROW)) {
-                           x -= 5;
-                         }
-              
-                        if (keyIsDown(RIGHT_ARROW)) {
-                           x += 5;
-                         }
-                        if (keyIsDown(UP_ARROW)) {
-                           y -= 5
-                         }
-              
-                        if (keyIsDown(DOWN_ARROW)) {
-                           y += 5;
-                         }
-              clear(); 
-       if(confc===0){
-         fill('red')
-       }
-       if(confc==1){
-         fill('rgb(255, 255, 0)');
-       } 
-       if(confc==2){
-         fill('rgb(64,224,208)');
-       }
-                         ellipse(x, y, 20, 50);
+  if(fase==5){             //fase final
+    
+       nn=true
+    if(fase==5&&music5==true){
+      bossbattle.loop()
+       music5=false
+     }
+        if (keyIsDown(LEFT_ARROW)) {
+    ne = true;
+    nn = false;
+    nd = false;
+    x -= 5;
+  }
+  else{
+    ne = false;
+  }
+
+  if (keyIsDown(RIGHT_ARROW)) {
+    nd = true;
+    nn = false;
+    ne = false;
+    x += 5;
+  }
+    else{
+      nd = false;
+  }
+
+  if (keyIsDown(UP_ARROW)) {
+    y -= 5
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    y += 5;
+  }
+
+  clear();
+         background(0);
+    ycena1 = ycena1 +5
+    ycena2 = ycena2 +5
+    imageMode(CORNER);
+    image(cena,0,ycena1,512, 910);
+    image(cena,0,ycena2,512, 910);
+    if(ycena1>=512){
+    ycena1 = -1308
+    }
+  if(ycena2>=512){
+    ycena2 = -1308
+    }
+  if (disparo) {
+   // ellipse(xd,yd,8,8) 
+          imageMode(CENTER);
+            image(t1, xd, yd,4,15);
+            }
+ if(impact2==true){
+                    imageMode(CENTER);
+                    image(e2,ex,ey,50,50);
+                           slowa5=slowa5 + 1
+                             if (slowa5>=3) {
+                                slowa5 = 0;
+                                conta5=conta5 + 1
+                              }
+                              if (conta5>=5) {
+                                 conta5 = 0;
+                                mysond2.play()
+                              impact2=false
+                              }
+                 }
+imageMode(CENTER); 
+image(fogo, x, y+25,15,15);
+   if(nn==true){
+               if(cor==0){
+                 imageMode(CENTER);
+              image(naveVn, x, y,50,50);
+               }
+                if(cor==1){
+                 imageMode(CENTER);
+              image(naveAn, x-1, y,50,50);
+               }
+                  if(cor==2){
+                 imageMode(CENTER);
+              image(navePn, x-1, y,50,50);
+               }
+     }
+   if(nd==true){
+                if(cor==0){
+                  imageMode(CENTER);
+              image(naveVd, x, y,50,50);
+               }
+                 if(cor==1){
+                  imageMode(CENTER);
+              image(naveAd, x, y,50,50);
+               }
+                   if(cor==2){
+                  imageMode(CENTER);
+              image(navePd, x, y,50,50);
+               }
+     }
+   if(ne==true){
+                  if(cor==0){
+                  imageMode(CENTER);
+              image(naveVe, x, y,50,50);
+               }
+                 if(cor==1){
+                  imageMode(CENTER);
+              image(naveAe, x, y,50,50);
+               }
+                   if(cor==2){
+                  imageMode(CENTER);
+              image(navePe, x, y,50,50);
+               }
+     }
+    
+                        // ellipse(x, y, 20, 50);
                                  if(x<12){
                                    x = 12
                                   }
@@ -886,11 +1446,16 @@ if(fase==4){
                  
                     fill(250, 220, 0);
                     if (disparo2) {
-                       ellipse(xp,yp,8,8)   
+                imageMode(CENTER);
+                image(Mn, xp, yp,10,20);
+                imageMode(CENTER);
+                image(fogo, xp, yp+25,8,10);   
                     }
          for(i=0;i<qti;i++){
                  fill('rgb(0,255,160)');
-                 ellipse(vxi[i], vyi[i], 50, 50);
+                 //ellipse(vxi[i], vyi[i], 50, 50);
+                 imageMode(CENTER);
+                 image(tb, vxi[i], vyi[i],50,50);
                  vyi[i] = vyi[i] + 3
                 
                 if(vyi[i]>height){
@@ -939,8 +1504,10 @@ if(fase==4){
                                       }
                         }
                      if (disparo) {
-                      ellipse(xd,yd,8,8)   
-                      }
+                     // ellipse(xd,yd,8,8)   
+                     imageMode(CENTER);
+                     image(t1, xd, yd,4,15);
+                     }
                     if(dist(x,y,vxi[i],vyi[i])<50){
                        x = 512/2-10;
                        y = 400;
@@ -949,11 +1516,16 @@ if(fase==4){
                        vyi[i] = - 50
                        }
                      if(dist(xd,yd,vxi[i],vyi[i])<29){
+                                             if(vyi[i]>0){
                        pontos = pontos + 1
+                       impact2 = true;
+                       ex = vxi[i]
+                       ey = vyi[i]
                       vxi[i] = Math.random() * (width - 50)
-                      vyi[i] = - 50
-                      disparo = false;
-                     }
+                       vyi[i] = - 50
+                      }
+                                 disparo = false; 
+                               }
                     if (disparo2) {
                       yp = yp -4; 
                          if (xp < vxi[imp]) {
@@ -967,10 +1539,15 @@ if(fase==4){
                            }
                       }
                     if(dist(xp,yp,vxi[i],vyi[i])<(55/2)+4){
-                            vxi[i] =Math.random() * (width - 50)
-                                     vyi[i] =  555
+                    if(vyi[i]>0){
+                       pontos = pontos + 1
+                       impact2 = true;
+                       ex = vxi[i]
+                       ey = vyi[i]
+                      vxi[i] = Math.random() * (width - 50)
+                       vyi[i] = - 50
+                      }
                             disparo2 = false;  
-                            pontos = pontos + 1
                      }
          }
                     if(bv<=351&&bv>=312){
@@ -1001,6 +1578,7 @@ if(fase==4){
                       nivel3 =30;
                     } 
                     if(bv==1){
+                      bossbattle.stop()
                       fase = fase+1
                     }
     if(nivel3>=26&&nivel3<=30){
@@ -1013,7 +1591,8 @@ if(fase==4){
                                 } 
                           if (disparo3) {
                              fill(0, 102, 153);
-                             ellipse(xdi2,ydi2,8,8)   
+                            // ellipse(xdi2,ydi2,8,8)   
+                            image(db,xdi2,ydi2,50,50);
                            }
                          if(dist(xdi2,ydi2,x,y)<(55/2)+4){
                            vidas = vidas - 1
@@ -1061,7 +1640,23 @@ if(fase==4){
     }
     tentativa de criação de um projétil bomba inimigo
     */
-                      fill(0, 102, 153);
+
+                     // ellipse(xb,yb,512,20)
+                      imageMode(CENTER);
+                         image(naveB, xb+1, 90,500,500/2);
+                 if(x>521/3&&x<512/2){
+                      imageMode(CENTER);
+                        image(naveBn, xb+1,50,50,50);
+                 }
+                 if(x<521/3){
+                      imageMode(CENTER);
+                        image(naveBe, xb+1,50,50,50);
+                 }
+                if(x>512/2){
+                      imageMode(CENTER);
+                        image(naveBd, xb+1,50,50,50);
+                 }
+                      fill(250);
                       textSize(18)
                       text("nível: "+(nivel3-20), 420, 30); 
                       text("fase:3", 420, 60);
@@ -1069,8 +1664,7 @@ if(fase==4){
                       text("pontos: "+pontos, 200, 30);
                       text("cargas: "+cargas, 10, 60);
                       rect(30, 512-30, 400, 20, 20);
-                      fill('rgb(0,255,160)'); 
-                      ellipse(xb,yb,512,20)
+                          fill('rgb(0,255,160)'); 
                       rect(35, 512-28, bv, 15, 20);
                     if(vidas <= 0){
                         x = 512/2-10
@@ -1079,10 +1673,17 @@ if(fase==4){
                         fill(250, 0, 0); 
                         textSize(60);
                         text("GAME OVER",80,512/2);
+                        bossbattle.stop()
+                        if(vidas <= 0 &&music6==true){
+                          musicgame.loop()
+                          music6=false
+                         }
                         vidas = 0;
                         disparo = false;
                         disparo2 = true; 
                         disparo3 = false;
+                      textSize(20)
+       text("caso deseje jogar novamente aperte a tecla 'f5'", 60, 420);
                       }
                       
   
@@ -1091,11 +1692,10 @@ if(fase==4){
          background(250)
         fill(0);
        textSize(50)
-       text("sério?", 110, 120);
+       text("Parabéns", 110, 120);
+    textSize(50)
+       text("Obrigado por jogar =D", 10, 320);
     textSize(20)
-       text("caso deseje jogar novamente aperte a tecla 'enter'", 60, 420);
-       if (keyIsDown(13)) {
-    fase=0
-     } 
+       text("caso deseje jogar novamente aperte a tecla 'f5'", 60, 420);
   }
 }
