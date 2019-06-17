@@ -358,7 +358,7 @@ text("mude o personagem usando as teclas \n                    'a','d' ou '←',
      }
         fill(250)
        textSize(40)
-       text("deseja faser a fase tutorial?", 10, 120);
+       text("deseja fazer a fase tutorial?", 10, 120);
        textSize(50)
        text("SIM", 70, 270);
        textSize(50)
@@ -824,7 +824,7 @@ image(fogo, x, y+25,15,15);
      }
         fill(250)
        textSize(35)
-       text("  deseja refaser a fase tutorial?", 10, 120);
+       text("  deseja refazer a fase tutorial?", 10, 120);
        textSize(50)
        text("SIM", 70, 270);
        textSize(50)
