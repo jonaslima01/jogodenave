@@ -8,13 +8,18 @@ var fase = 0
 var tempo = 0;
 var cd = 0;
 var cs = 0;
-var enter = false;
+var enter = 0;
 var cor = 0;
+var esc = 0;
 var confc = 0;
 var slow = 0;
 var cont = 5;
+var conti1 = 0;
+var conti2 = 0;
+var conti3 = 0;
 var contpontos = 5;
 var contm1 = false;
+var contm3 = false;
 var m2 = false;
 var xo=Math.random() * 400;
 var yo = 522;
@@ -107,6 +112,7 @@ var ycena1 = -398;
 var ycena2 = -1308;
 var ex = 0;
 var ey = 0;
+var t = 0;
 function setup() {
   createCanvas(512, 512);
     for(i=0;i<qti;i++){
@@ -183,8 +189,18 @@ function keyPressed(){
      if (keyIsDown(RIGHT_ARROW)) {
      cs =cs +1
      }
+     if (keyIsDown(65)) {
+     cs = cs -1
+     }
+     if (keyIsDown(68)) {
+     cs =cs +1
+     }
+    if (keyIsDown(13)) {
+     enter = 1
+     }
 } 
 function draw() {
+
   fogo = imgfogo[conta1]
   slowa1++
   if (slowa1==3) {
@@ -265,13 +281,17 @@ function draw() {
     ycena2 = -1308
     }
         fill(250);
+     textSize(14)
+     text("              o incrívelmente difícil e rápido jogo de nave da minha rua", 10, 50);
        textSize(40)
-     text("  escolha seu personagem:", 10, 150);
-     textSize(30)
-  if (keyIsDown(16)) {
+     text("  escolha seu personagem:", 10, 150); 
+     if (enter==1) {
+     enter=0;
     fase=fase+1
   }  
-     text("  aperte a tecla 'Shift' para confirmar", 10, 450);
+     textSize(30)
+text("mude o personagem usando as teclas \n                    'a','d' ou '←','→' ", 5, 380);
+     text("  aperte a tecla 'enter' para confirmar", 10, 450);
   if (cs %3=== 0) {
     cs = 0
   }
@@ -308,18 +328,54 @@ function draw() {
      
    }
  if(fase==1){                    //pre-tutorial
-         background(250)
-        fill(0)
+        background(0);
+   t++
+    ycena1 = ycena1 +5
+    ycena2 = ycena2 +5
+    imageMode(CORNER);
+    image(cena,0,ycena1,512, 910);
+    image(cena,0,ycena2,512, 910);
+    if(ycena1>=512){
+    ycena1 = -1308
+    }
+  if(ycena2>=512){
+    ycena2 = -1308
+    }
+      if (cs %2=== 0) {
+    cs = 0
+  }
+     if(cs===0){
+     //rect(20, 190, 140, 140);
+       imageMode(CORNER);
+       image(moldura, 280, 220, 140, 70);
+       esc = 0;
+     }
+     if(cs==1||cs==-1){
+    // rect(512/2-70, 190, 140, 140);
+       imageMode(CORNER);
+     image(moldura,50, 220, 140, 70);
+       esc = 1;
+     }
+        fill(250)
+       textSize(40)
+       text("deseja faser a fase tutorial?", 10, 120);
        textSize(50)
-       text("fase tutorial", 110, 120);
-       textSize(20)
-       text("caso deseje fazer o tutorial aperte a tecla 'r'", 60, 270);
-       textSize(20)
-       text("caso deseje pular o tutorial aperte a tecla 'enter'", 60, 420);
-        if (keyIsDown(13)){
-            fase=fase+2
-         musicselect.stop()
-         }
+       text("SIM", 70, 270);
+       textSize(50)
+       text("NÃO", 300, 270);
+    if (t>=20&&enter==1&&cs!=0) {  // leva para o tutorial
+    fase=fase+1
+      musicselect.stop()
+    enter=0;
+  }  
+       if (t>=20&&enter==1&&cs==0) {  // leva para a fase 1
+    fase=fase+3
+      musicselect.stop()
+    enter=0;
+  }  
+     textSize(30)
+
+     text("  aperte a tecla 'enter' para confirmar", 10, 450);
         if (keyIsDown(82)){
            fase=fase+1
         musicselect.stop()
@@ -331,7 +387,7 @@ function draw() {
        music6=false
         }
     nn=true
-        if (keyIsDown(LEFT_ARROW)) {
+       if (keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
     ne = true;
     nn = false;
     nd = false;
@@ -341,7 +397,7 @@ function draw() {
     ne = false;
   }
 
-  if (keyIsDown(RIGHT_ARROW)) {
+  if (keyIsDown(RIGHT_ARROW)||keyIsDown(68)) {
     nd = true;
     nn = false;
     ne = false;
@@ -351,11 +407,13 @@ function draw() {
       nd = false;
   }
 
-  if (keyIsDown(UP_ARROW)) {
+  if (keyIsDown(UP_ARROW)||keyIsDown(87)) {
     y -= 5
+    ycena1 = ycena1 +5
+    ycena2 = ycena2 +5
   }
 
-  if (keyIsDown(DOWN_ARROW)) {
+  if (keyIsDown(DOWN_ARROW)||keyIsDown(83)) {
     y += 5;
   }
 
@@ -616,7 +674,7 @@ image(fogo, x, y+25,15,15);
     rect(0,430,512,112) 
            fill(0);
             textSize(25)
-            text("use as teclas ←,↑,→ ou ↓ \npara mover o personagem.", 100, 470);
+            text("use as teclas ←,↑,→,↓ ou  'a' 'w' 'd' 's'\n        para mover o personagem.", 20, 470);
            }     
          if(tempo>220&&tempo<420){
            fill(250);    
@@ -641,14 +699,14 @@ image(fogo, x, y+25,15,15);
            }
            if(tempo>660){
               if(tempo<860&&tempo%50!==0||tempo<1160&&tempo%50!=1){
-                fill(0, 102, 153);
+                fill(255);
                 textSize(18)
                 text("vidas:∞", 10, 30);
                 text("cargas:∞", 10, 60);
                }
            }
              if(tempo>860){
-                fill(0, 102, 153);
+                fill(255);
                 textSize(18)
                 text("vidas:∞", 10, 30);
                 text("cargas:∞", 10, 60);
@@ -678,19 +736,19 @@ image(fogo, x, y+25,15,15);
            }
         if(tempo>1700){
             if(tempo<1700&&tempo%50!==0||tempo<1700&&tempo%50!=1){
-               fill(0, 102, 153);
+               fill(255);
                textSize(18)
                text("pontos: "+pontos, 200, 30);
               text("nível:0", 420, 30);
              }
         }
         if(tempo>1500){
-           fill(0, 102, 153);
+           fill(255);
                textSize(18)
                text("pontos: "+pontos, 200, 30);
                text("nível:0", 420, 30);
         }
-           fill(0, 102, 153);
+           fill(255);
            textSize(18)
            text("tutorial", 420, 60);
      tempo++
@@ -716,36 +774,90 @@ image(fogo, x, y+25,15,15);
                           m2=false
                           }
                         }
+                         if(contm3==true) {
+                              cont++;
+                              if(cont<=100) {
+                              textSize(20)
+                              text("ganhou duas vidas", 150, 270); 
+                              }
+                          else{
+                            cont=0
+                          contm3=false
+                          }
+                        }
      if(pontos>=15){
-       background(250)
-        fill(0);
-       textSize(50)
-       text("fim do tutorial", 110, 120);
-       textSize(20)
-       text("caso deseje refazer o tutorial aperte a tecla 'r'", 60, 270);
-       textSize(20)
-       text("caso deseje iniciar o jogo aperte a tecla 'enter'", 70, 420);
-        if (keyIsDown(13)){
-           musictuto.stop()
           pontos = 0
             fase=fase+1
-             cargas = 6
-         }
-        if (keyIsDown(82)){
-            pontos = 0
-            tempo = 0 
-         }
-       
+       cs = 0;
+       t = 0;
+        vyi[i] = -50;
      }
     }
- if(fase==3){             //FASE 1
-    if(fase==3&&music3==true){
+ if(fase==3){ 
+           background(0);
+   t++
+    ycena1 = ycena1 +5
+    ycena2 = ycena2 +5
+    imageMode(CORNER);
+    image(cena,0,ycena1,512, 910);
+    image(cena,0,ycena2,512, 910);
+    if(ycena1>=512){
+    ycena1 = -1308
+    }
+  if(ycena2>=512){
+    ycena2 = -1308
+    }
+      if (cs %2=== 0) {
+    cs = 0
+  }
+     if(cs===0){
+     //rect(20, 190, 140, 140);
+       imageMode(CORNER);
+       image(moldura, 280, 220, 140, 70);
+       esc = 0;
+     }
+     if(cs==1||cs==-1){
+    // rect(512/2-70, 190, 140, 140);
+       imageMode(CORNER);
+     image(moldura,50, 220, 140, 70);
+       esc = 1;
+     }
+        fill(250)
+       textSize(35)
+       text("  deseja refaser a fase tutorial?", 10, 120);
+       textSize(50)
+       text("SIM", 70, 270);
+       textSize(50)
+       text("NÃO", 300, 270);
+    if (t>=20&&enter==1&&cs!=0) {  // leva para o tutorial
+    fase=fase-1
+      musicselect.stop()
+    enter=0;
+      tempo=0;
+  }  
+       if (t>=20&&enter==1&&cs==0) {  // leva para a fase 1
+    fase=fase+1
+    musictuto.stop()
+    enter=0;
+         cargas=6;
+         slow=0;
+  }  
+     textSize(30)
+
+     text("  aperte a tecla 'enter' para confirmar", 10, 450);
+        if (keyIsDown(82)){
+           fase=fase+1
+           musictuto.stop()
+         }
+ }
+ if(fase==4){             //FASE 1
+    if(fase==4&&music3==true){
       musicfase1.loop()
       nivel=1
        music3=false
      }
        nn=true
-        if (keyIsDown(LEFT_ARROW)) {
+        if (keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
     ne = true;
     nn = false;
     nd = false;
@@ -755,7 +867,7 @@ image(fogo, x, y+25,15,15);
     ne = false;
   }
 
-  if (keyIsDown(RIGHT_ARROW)) {
+ if (keyIsDown(RIGHT_ARROW)||keyIsDown(68)) {
     nd = true;
     nn = false;
     ne = false;
@@ -765,11 +877,12 @@ image(fogo, x, y+25,15,15);
       nd = false;
   }
 
-  if (keyIsDown(UP_ARROW)) {
+  if (keyIsDown(UP_ARROW)||keyIsDown(87)) {
     y -= 5
+    ycena1 = ycena1 +5
+    ycena2 = ycena2 +5
   }
-
-  if (keyIsDown(DOWN_ARROW)) {
+  if (keyIsDown(DOWN_ARROW)||keyIsDown(83)) {
     y += 5;
   }
 
@@ -968,13 +1081,14 @@ image(fogo, x, y+25,15,15);
                        yo2 =  525
                      }
                     if(dist(x,y,xo3,yo3)<24){
-                      
+                      contm3=true
                       yo3 =  525
                        pontos = pontos + 2
                      }
                     if(dist(xd,yd,xo3,yo3)<14){
                       yo3 =  525
                        pontos = pontos + 2
+                      contm3=true
                        
                      }
                     if(dist(x,y,xo2,yo2)<24){
@@ -1010,7 +1124,7 @@ image(fogo, x, y+25,15,15);
                           }
                       }
              
-                fill(0, 102, 153);
+                fill(255);
                 textSize(18)
                 text("nível: "+nivel, 420, 30);
                 text("fase:1", 420, 60);
@@ -1018,25 +1132,36 @@ image(fogo, x, y+25,15,15);
                  text("pontos: "+pontos, 200, 30);
                 text("cargas: "+cargas, 10, 60);
                     if(contm1==true) {
-                              cont++;
-                              if(cont<=100) {
+                              conti1++;
+                              if(conti1<=100) {
                               textSize(20)
                               text("inimigos mais lentos", 150, 240); 
                               }
                           else{
-                            cont=0
+                            conti1=0
                           contm1=false
                           }
                         }
                            if(m2==true) {
-                              cont++;
-                              if(cont<=100) {
+                              conti2++;
+                              if(conti2<=100) {
                               textSize(20)
                               text("ganhou duas vidas", 150, 270); 
                               }
                           else{
-                            cont=0
+                            conti2=0
                           m2=false
+                          }
+                        }
+                        if(contm3==true) {
+                              conti3++;
+                              if(conti3<=100) {
+                              textSize(20)
+                              text("mais 2 pontos", 150, 310); 
+                              }
+                          else{
+                            conti3=0
+                          contm3=false
                           }
                         }
                
@@ -1083,9 +1208,9 @@ image(fogo, x, y+25,15,15);
                        }
                      
                       if(vidas <= 0){
-                        if(vidas <= 0 &&music6==true){
+                        if(vidas <= 0 &&music7==true){
                           musicgame.loop()
-                          music6=false
+                          music7=false
                          }
                         musicfase1.stop()
                         x = 512/2-10
@@ -1103,9 +1228,9 @@ image(fogo, x, y+25,15,15);
                         disparo2 = true; 
                       }
             }   
-if(fase==4){                        //fase 2
+if(fase==5){                        //fase 2
  nn = true;                       
-        if (keyIsDown(LEFT_ARROW)) {
+        if (keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
              ne = true;
              nn = false;
              nd = false;
@@ -1115,7 +1240,7 @@ if(fase==4){                        //fase 2
              ne = false;
            }
          
-           if (keyIsDown(RIGHT_ARROW)) {
+          if (keyIsDown(RIGHT_ARROW)||keyIsDown(68)) {
              nd = true;
              nn = false;
              ne = false;
@@ -1227,7 +1352,7 @@ image(fogo, x, y+25,15,15);
                          
                        }
                                   
-                       fill(0, 102, 153);
+                       fill(255);
                        textSize(18)
                        text("nível: "+(nivel2-10), 420, 30);
                        cargas = 6;
@@ -1264,7 +1389,7 @@ image(fogo, x, y+25,15,15);
                           }
                          
                        
-                        fill(0, 102, 153);
+                        fill(255);
                 textSize(18)
                 text("fase:2", 420, 60);
                  text("vidas: "+vidas, 10, 30);
@@ -1272,13 +1397,14 @@ image(fogo, x, y+25,15,15);
                 text("cargas: "+cargas, 10, 60);
                       if(vidas <= 0){
                         musicfase1.stop()
-                        if(vidas <= 0 &&music6==true){
+                        if(vidas <= 0 &&music7==true){
                           musicgame.loop()
-                          music6=false
+                          music7=false
                          }
-                         textSize(20)
- text("caso deseje jogar novamente aperte a tecla 'f5'", 60, 420);
+                         textSize(20) 
                         fill(250, 0, 0); 
+ text("caso deseje jogar novamente aperte a tecla 'f5'", 60, 420);
+                      
                         textSize(60);
                         text("GAME OVER",80,512/2);
                         x = 512/2-10
@@ -1306,14 +1432,14 @@ image(fogo, x, y+25,15,15);
                    musicfase1.stop()
                    }
       }
-  if(fase==5){             //fase final
+  if(fase==6){             //fase final
     
        nn=true
-    if(fase==5&&music5==true){
+    if(fase==6&&music5==true){
       bossbattle.loop()
        music5=false
      }
-        if (keyIsDown(LEFT_ARROW)) {
+        if (keyIsDown(LEFT_ARROW)||keyIsDown(65)) {
     ne = true;
     nn = false;
     nd = false;
@@ -1323,7 +1449,7 @@ image(fogo, x, y+25,15,15);
     ne = false;
   }
 
-  if (keyIsDown(RIGHT_ARROW)) {
+  if (keyIsDown(RIGHT_ARROW)||keyIsDown(68)) {
     nd = true;
     nn = false;
     ne = false;
@@ -1333,11 +1459,13 @@ image(fogo, x, y+25,15,15);
       nd = false;
   }
 
-  if (keyIsDown(UP_ARROW)) {
+  if (keyIsDown(UP_ARROW)||keyIsDown(87)) {
     y -= 5
+    ycena1 = ycena1 +5
+    ycena2 = ycena2 +5
   }
 
-  if (keyIsDown(DOWN_ARROW)) {
+  if (keyIsDown(DOWN_ARROW)||keyIsDown(83)) {
     y += 5;
   }
 
@@ -1674,9 +1802,9 @@ image(fogo, x, y+25,15,15);
                         textSize(60);
                         text("GAME OVER",80,512/2);
                         bossbattle.stop()
-                        if(vidas <= 0 &&music6==true){
+                        if(vidas <= 0 &&music7==true){
                           musicgame.loop()
-                          music6=false
+                          music7=false
                          }
                         vidas = 0;
                         disparo = false;
@@ -1688,9 +1816,21 @@ image(fogo, x, y+25,15,15);
                       
   
     }
-  if(fase==6){
-         background(250)
-        fill(0);
+  if(fase==7){
+          background(0);
+   t++
+    ycena1 = ycena1 +5
+    ycena2 = ycena2 +5
+    imageMode(CORNER);
+    image(cena,0,ycena1,512, 910);
+    image(cena,0,ycena2,512, 910);
+    if(ycena1>=512){
+    ycena1 = -1308
+    }
+  if(ycena2>=512){
+    ycena2 = -1308
+    }
+        fill(255);
        textSize(50)
        text("Parabéns", 110, 120);
     textSize(50)
