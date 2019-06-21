@@ -1631,9 +1631,7 @@ image(fogo, x, y+25,15,15);
                      if (disparo) {
                       yd = yd -5; 
                          if (yd < 80) {
-                           if (bv > 4) {
                              bv=bv-3;
-                           }
                            disparo = false; 
                                       }
                         }
