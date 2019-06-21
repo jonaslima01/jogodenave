@@ -4,7 +4,7 @@ let cargas = 6
 var nivel=1;
 var nivel2=11;
 var nivel3=21;
-var fase = 0
+var fase = 0;
 var tempo = 0;
 var cd = 0;
 var cs = 0;
@@ -37,7 +37,6 @@ let xd = 0;
 let yd = 0;
 let a  = 0;
 let qte = 3;
-let j = 0;
 var disparo = false;
 let xp = -50;
 let yp = -50;
@@ -358,7 +357,7 @@ text("mude o personagem usando as teclas \n                    'a','d' ou '←',
      }
         fill(250)
        textSize(40)
-       text("deseja fazer a fase tutorial?", 10, 120);
+       text("deseja faser a fase tutorial?", 10, 120);
        textSize(50)
        text("SIM", 70, 270);
        textSize(50)
@@ -605,10 +604,14 @@ image(fogo, x, y+25,15,15);
                                       }
                         }
                     if(dist(x,y,vxi[i],vyi[i])<50){
+                      ex = x
+                       ey = y
+                      impact2 = true;
                        x = 512/2;
                        y = 480;
                        vxi[i] = Math.random() * (width - 50)
                        vyi[i] = - 50
+                      
                   }
                        
                      if(dist(xd,yd,vxi[i],vyi[i])<29){
@@ -824,7 +827,7 @@ image(fogo, x, y+25,15,15);
      }
         fill(250)
        textSize(35)
-       text("  deseja refazer a fase tutorial?", 10, 120);
+       text("  deseja refaser a fase tutorial?", 10, 120);
        textSize(50)
        text("SIM", 70, 270);
        textSize(50)
@@ -1043,6 +1046,9 @@ image(fogo, x, y+25,15,15);
                            image(t1, xd, yd,4,15);
                            }
                          if(dist(x,y,vxi[i],vyi[i])<50){
+                            ex = x
+                            ey = y
+                            impact2 = true;
                             x = 512/2;
                             y = 480;
                             vidas = vidas - 1
@@ -1343,6 +1349,8 @@ image(fogo, x, y+25,15,15);
                        if( nivel2 < 21&&vidas>0){
                                   if (y>150){
                                     y = y - tempo
+                                     textSize(38)
+                            text("desvie dos disparos inimigos", 10, 330)
                                   }
                            if (yi>450){
                                     yi = yi - 4
@@ -1487,6 +1495,7 @@ image(fogo, x, y+25,15,15);
           imageMode(CENTER);
             image(t1, xd, yd,4,15);
             }
+              
  if(impact2==true){
                     imageMode(CENTER);
                     image(e2,ex,ey,50,50);
@@ -1625,9 +1634,6 @@ image(fogo, x, y+25,15,15);
                            if (bv > 4) {
                              bv=bv-3
                            }
-                           if (bv < 4) {
-                             bv=bv-1
-                           }
                            disparo = false; 
                                       }
                         }
@@ -1637,6 +1643,9 @@ image(fogo, x, y+25,15,15);
                      image(t1, xd, yd,4,15);
                      }
                     if(dist(x,y,vxi[i],vyi[i])<50){
+                       ex = x
+                       ey = y
+                       impact2 = true;
                        x = 512/2-10;
                        y = 400;
                       vidas = vidas -1
@@ -1701,13 +1710,24 @@ image(fogo, x, y+25,15,15);
                     }
                     if(bv<=78&&bv>=39){
                       nivel3 =29;
+                      tempo = 0;
                     } 
                     if(bv<=39&&bv>=1){
                       nivel3 =30;
                     } 
-                    if(bv==1){
+                    if(bv<=1){
+                      disparo3 = true; 
+                      qti = 0;
                       bossbattle.stop()
+                       tempo++
+                        if(tempo%9==0){
+                      ex = random(10,500)
+                      ey = random(50,100)
+                      impact=true
+                                      }
+                      if(tempo>=250){
                       fase = fase+1
+                      }
                     }
     if(nivel3>=26&&nivel3<=30){
                        if (disparo3) {
@@ -1737,37 +1757,6 @@ image(fogo, x, y+25,15,15);
                           }
                            cd++
     }
-    /*if(nivel3>=26&&nivel3<=30){
-                           if (disparo3) {
-                            ydi2 = ydi2 + 3 ; 
-                              if (ydi2 > 400) {
-                                 disparo3 = false;
-                                esplosion = false;
-                                 cd = 0
-                                 }
-                                } 
-                          if (disparo3) {
-                             fill(0, 102, 153);
-                             ellipse(xdi2,ydi2,8,8)   
-                           }
-                         if(dist(xdi2,ydi2,x,y)<(55/2)+4){
-                           vidas = vidas - 1
-                           xdi2= -10
-                           ydi2= -10
-                           disparo3 = false;  
-                            pontos = pontos -1
-                           cd = 0
-                           }
-                         if(cd>=100&& !disparo3) { 
-                           disparo3 = true; 
-                            xdi2= x;
-                           ydi2= 80;
-                          }
-                           cd++
-    
-    }
-    tentativa de criação de um projétil bomba inimigo
-    */
 
                      // ellipse(xb,yb,512,20)
                       imageMode(CENTER);
@@ -1784,6 +1773,20 @@ image(fogo, x, y+25,15,15);
                       imageMode(CENTER);
                         image(naveBd, xb+1,50,50,50);
                  }
+     if(impact==true){
+                    imageMode(CENTER);
+                    image(e1,ex,ey);
+                           slowa4=slowa4 + 1
+                             if (slowa4>=2) {
+                                slowa4 = 0;
+                                conta4=conta4 + 1
+                              }
+                              if (conta4>=9) {
+                                 conta4 = 0;
+                                mysond2.play()
+                              impact=false
+                              }
+                 }
                       fill(250);
                       textSize(18)
                       text("nível: "+(nivel3-20), 420, 30); 
@@ -1792,8 +1795,10 @@ image(fogo, x, y+25,15,15);
                       text("pontos: "+pontos, 200, 30);
                       text("cargas: "+cargas, 10, 60);
                       rect(30, 512-30, 400, 20, 20);
-                          fill('rgb(0,255,160)'); 
+                        if(bv>=1){
+                      fill('rgb(0,255,160)'); 
                       rect(35, 512-28, bv, 15, 20);
+                        }
                     if(vidas <= 0){
                         x = 512/2-10
                         y = 400
